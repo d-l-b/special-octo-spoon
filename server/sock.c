@@ -361,8 +361,12 @@ static void sock_dispatch_events( struct sock *sock, int prevstate, int event, i
         sock->errors[FD_READ_BIT] = 0;
     }
 
-    if (event & POLLOUT)
-    {
+	if ((event & POLLOUT) && (sock->state & FD_WRITE))
+	{
+	/* According to WS2 spec, FD_WRITE is only delivered
+	   after connect and WSAEWOULDBLOCK while sending,
+	   so we clear FD_WRITE here. */
+		sock->state &= ~FD_WRITE;
         sock->pmask |= FD_WRITE;
         sock->hmask |= FD_WRITE;
         sock->errors[FD_WRITE_BIT] = 0;
