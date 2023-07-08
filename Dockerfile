@@ -1,14 +1,14 @@
 FROM ubuntu:latest AS builder
 
 RUN apt-get update && \
-	apt-get install -y --no-install-recommends \
-	build-essential \
+  apt-get install -y --no-install-recommends \
+  build-essential \
   gcc-multilib flex bison lib32z1-dev && \
   dpkg --add-architecture i386
 COPY . .
 
 RUN cd /wine 2>/dev/null && \
-	CFLAGS="$CFLAGS -fcommon" ./configure \
+  CFLAGS="$CFLAGS -fcommon" ./configure \
   --without-x \
   --without-alsa \
   --without-capi \
@@ -55,10 +55,10 @@ RUN cd /wine 2>/dev/null && \
   --without-xslt \
   --without-xxf86vm \
   --disable-win16 \
-	--disable-largefile
+  --disable-largefile
 RUN make -C /wine && \
-	mkdir -p /opt/wine && \
-	make prefix=/opt/wine -C wine install
+  mkdir -p /opt/wine && \
+  make prefix=/opt/wine -C wine install
 
 FROM ubuntu:latest
 RUN adduser d2gs
