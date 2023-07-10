@@ -72,7 +72,7 @@ RUN cd /wine 2>/dev/null && \
   --disable-progman \
   --disable-notepad \
   --disable-urlmon \
-  --disable-uxtheme \
+  --enable-uxtheme \
   --disable-vbscript \
   --disable-windowscodecs \
   --disable-windowscodecsext \
@@ -142,7 +142,7 @@ RUN cd /wine 2>/dev/null && \
   --disable-d3dx9_42 \
   --disable-d3dx9_43 \
   --disable-d3dxof \
-  --disable-dsound
+  --enable-dsound
 RUN make -j4 -C /wine && \
   mkdir -p /opt/wine /wine-build && \
   cd /wine-build 2>/dev/null && \
